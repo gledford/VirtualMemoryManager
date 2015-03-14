@@ -1,0 +1,56 @@
+Virtual Memory Manager by Garry Ledford (gl89) in C++
+
+How to run original (Physical Memory Size = 256)
+**********************************************
+./VirtualMemoryManager addresses.txt -256
+or
+./VirtualMemoryManager addresses2.txt -256
+
+
+How to run modifications (Physical Memory Size = 128)
+**********************************************
+./VirtualMemoryManager addresses2.txt -128
+or
+./VirtualMemoryManager addresses.txt -128
+
+How to run additional functionality (Physical Memory Size = variable and Copyback Metrics)
+***********************************************
+./VirtualMemoryManager addresses2.txt -128 -copyback
+or
+./VirtualMemoryManager addresses2.txt -256 -copyback
+
+Provided Metrics
+**********************************************
+-Number of translated virtual addresses
+-Number of page faults
+-Page fault rate
+-Number of TLB hits
+-TLB hit rate
+-Number of swaps (write back to memory)
+
+
+Design Documentation
+**********************************************
+-DataSizes.cpp/.h - contains all dynamic sizes for page size,
+number of pages, size of main memory, and size of tlb.
+
+-DiskReader.cpp/.h - encapsulates the reading of the binary file
+and enters the data into the Physical Memory and Page Table
+
+-Page.h - contains the definition of a page
+
+-PageTable.cpp/.h - contains the page number, frame number pairing.
+
+-PhysicalMemory.cpp/.h - contains the actual pages in a Page array.
+Uses a vector as the queue for recently used and a dirty bit indicating
+read or write. Uses the LRU algorithm.
+
+-Statistics.cpp/.h - contains all the collected metrics
+
+-Swap.cpp/.h - keeps track of the pages that need to be written back
+to memory
+
+-TranslationLookasideBuffer.cpp/.h - contains the tlb as a vector of pairs.
+It also contains the dirty bit and uses the LRU algorithm.
+
+-VirtualMemoryManager.cpp - the main of the program
